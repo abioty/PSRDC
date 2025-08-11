@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSRDC Score Calculator - Preterm Infant Neurodevelopmental Risk Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #00A7E1 0%, #7B2D8E 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #00A7E1 0%, #7B2D8E 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+            padding-bottom: 0;
+        }
+        
+        .calculator-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .calculator-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .calculator-section h2 {
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #00A7E1;
+        }
+        
+        .unsupervised h2 {
+            border-color: #7B2D8E;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .form-group select:focus {
+            outline: none;
+            border-color: #00A7E1;
+            box-shadow: 0 0 0 3px rgba(0, 167, 225, 0.1);
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #00A7E1 0%, #7B2D8E 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .results-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .result-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .risk-category {
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2em;
+            margin: 15px 0;
+        }
+        
+        .risk-low {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .risk-moderate {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .risk-high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .recommendations {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .recommendations h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .recommendations li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .recommendations li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #00A7E1;
+            font-weight: bold;
+        }
+        
+        .example-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .example-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .example-inputs {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .example-results {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #00A7E1;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .print-btn {
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            float: right;
+            margin-top: 20px;
+        }
+        
+        .print-btn:hover {
+            background: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator-wrapper,
+            .results-grid,
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .print-btn {
+                display: none;
+            }
+        }
+        
+        .stat-value {
+            font-size: 1.1em;
+            color: #495057;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #00A7E1 0%, #7B2D8E 100%);
+            color: white;
+            padding: 40px;
+            margin-top: 50px;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .footer h3 {
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .footer-section {
+            line-height: 1.8;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 15px;
+            color: white;
+            opacity: 0.95;
+        }
+        
+        .footer-section p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .footer-section a:hover {
+            border-bottom-color: white;
+        }
+        
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PSRDC Score Calculator</h1>
+            <p>Perinatal Social Risk Determinant Composite Score for Preterm Infants</p>
+            <p style="font-size: 1.1em; margin-top: 15px; font-weight: 600;">Cincinnati Children's Hospital Medical Center</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Validated for infants born ≤32 weeks gestational age</p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <strong>About the PSRDC Score:</strong> This validated composite score predicts neurodevelopmental outcomes at 2 years corrected age in preterm infants. 
+                The score integrates five key social determinants: maternal age, education, household income, employment status, and family structure.
+                Two models are available: Lasso (supervised) optimized for Bayley-III scores, and PAM Clustering (unsupervised) for broader outcome assessment.
+            </div>
+            
+            <div class="calculator-wrapper">
+                <!-- Unsupervised Model (Left) -->
+                <div class="calculator-section unsupervised">
+                    <h2>PAM Clustering Model (Unsupervised)</h2>
+                    <p style="color: #666; margin-bottom: 20px;">Best for: Broader developmental outcomes, external validation, longitudinal tracking</p>
+                    
+                    <form id="unsupervised-form">
+                        <div class="form-group">
+                            <label>Maternal Age at Delivery</label>
+                            <select name="age" required>
+                                <option value="">Select...</option>
+                                <option value="0">Over 25 years (Reference)</option>
+                                <option value="-0.655">25 years or younger</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Maternal Education</label>
+                            <select name="education" required>
+                                <option value="">Select...</option>
+                                <option value="0">Graduate degree (Reference)</option>
+                                <option value="-0.095">College degree/Some college</option>
+                                <option value="-0.889">High school or less</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Household Income</label>
+                            <select name="income" required>
+                                <option value="">Select...</option>
+                                <option value="0">High income (≥400% FPL) (Reference)</option>
+                                <option value="0.551">Middle income (125-400% FPL)</option>
+                                <option value="-0.861">Low income (≤125% FPL)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Employment Status</label>
+                            <select name="employment" required>
+                                <option value="">Select...</option>
+                                <option value="0">Employed (Reference)</option>
+                                <option value="-0.048">Stay-at-home caregiver</option>
+                                <option value="-0.016">Student</option>
+                                <option value="-0.651">Unemployed</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Family Structure</label>
+                            <select name="family" required>
+                                <option value="">Select...</option>
+                                <option value="0">Married (Reference)</option>
+                                <option value="-0.063">Cohabiting/Living with partner</option>
+                                <option value="-0.840">Single/Divorced/Separated</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Supervised Model (Right) -->
+                <div class="calculator-section supervised">
+                    <h2>Lasso Model (Supervised)</h2>
+                    <p style="color: #666; margin-bottom: 20px;">Best for: Bayley-III prediction at 2 years, clinical decision-making</p>
+                    
+                    <form id="supervised-form">
+                        <div class="form-group">
+                            <label>Maternal Age at Delivery</label>
+                            <select name="age" required>
+                                <option value="">Select...</option>
+                                <option value="0">Over 25 years (Reference)</option>
+                                <option value="-2.063">25 years or younger</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Maternal Education</label>
+                            <select name="education" required>
+                                <option value="">Select...</option>
+                                <option value="0">Graduate degree (Reference)</option>
+                                <option value="-3.875">College degree/Some college</option>
+                                <option value="-5.729">High school or less</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Household Income</label>
+                            <select name="income" required>
+                                <option value="">Select...</option>
+                                <option value="0">High income (≥400% FPL) (Reference)</option>
+                                <option value="0">Middle income (125-400% FPL)</option>
+                                <option value="-7.291">Low income (≤125% FPL)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Employment Status</label>
+                            <select name="employment" required>
+                                <option value="">Select...</option>
+                                <option value="0">Employed (Reference)</option>
+                                <option value="-4.683">Stay-at-home caregiver</option>
+                                <option value="4.732">Student</option>
+                                <option value="-2.009">Unemployed</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Family Structure</label>
+                            <select name="family" required>
+                                <option value="">Select...</option>
+                                <option value="0">Married (Reference)</option>
+                                <option value="-2.139">Cohabiting/Living with partner</option>
+                                <option value="-0.145">Single/Divorced/Separated</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateScores()">Calculate PSRDC Scores</button>
+            
+            <!-- Results Section -->
+            <div id="results" class="results-section">
+                <h2 style="text-align: center; margin-bottom: 30px;">Risk Assessment Results</h2>
+                
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h3>PAM Clustering Score (Unsupervised)</h3>
+                        <div id="unsup-score" class="score-display"></div>
+                        <div id="unsup-risk" class="risk-category"></div>
+                        <div class="stat-value">
+                            <span class="stat-label">NDI Probability:</span> 
+                            <span id="unsup-ndi"></span>
+                        </div>
+                        <div class="stat-value">
+                            <span class="stat-label">Percentile:</span> 
+                            <span id="unsup-percentile"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h3>Lasso Score (Supervised)</h3>
+                        <div id="sup-score" class="score-display"></div>
+                        <div id="sup-risk" class="risk-category"></div>
+                        <div class="stat-value">
+                            <span class="stat-label">NDI Probability:</span> 
+                            <span id="sup-ndi"></span>
+                        </div>
+                        <div class="stat-value">
+                            <span class="stat-label">Percentile:</span> 
+                            <span id="sup-percentile"></span>
+                        </div>
+                        <div class="stat-value">
+                            <span class="stat-label">Predicted Bayley-III Cognitive:</span> 
+                            <span id="sup-bayley"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recommendations">
+                    <h3>Clinical Recommendations</h3>
+                    <div id="recommendations-content"></div>
+                </div>
+                
+                <button class="print-btn" onclick="window.print()">Print Report</button>
+            </div>
+            
+            <!-- Example Section -->
+            <div class="example-section">
+                <h2>Example Case Scenario</h2>
+                
+                <div class="example-grid">
+                    <div class="example-inputs">
+                        <h4 style="margin-bottom: 15px;">Patient Profile:</h4>
+                        <p><strong>Maternal Age:</strong> 22 years</p>
+                        <p><strong>Education:</strong> High school diploma</p>
+                        <p><strong>Income:</strong> Below poverty line (80% FPL)</p>
+                        <p><strong>Employment:</strong> Unemployed</p>
+                        <p><strong>Family Structure:</strong> Single mother</p>
+                        <p style="margin-top: 15px;"><em>Infant born at 28 weeks GA, now approaching 2-year follow-up</em></p>
+                    </div>
+                    
+                    <div class="example-results">
+                        <h4 style="margin-bottom: 15px;">Assessment Results:</h4>
+                        <p><strong>PAM Clustering Score:</strong> -2.41 (High Risk - lowest tertile)</p>
+                        <p><strong>Lasso Score:</strong> -15.87 (High Risk - lowest tertile)</p>
+                        <p><strong>NDI Probability:</strong> 61% (Lasso model)</p>
+                        <p><strong>Predicted Bayley-III Cognitive:</strong> 82 (below average)</p>
+                        
+                        <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 8px;">
+                            <strong>Recommendations:</strong>
+                            <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                                <li>• Immediate referral for early intervention services</li>
+                                <li>• Connect family with social services for income support</li>
+                                <li>• Provide parenting education resources</li>
+                                <li>• Schedule frequent developmental monitoring (every 3 months)</li>
+                                <li>• Consider home visiting program enrollment</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer with Developer Information -->
+            <div class="footer">
+                <h3>About the PSRDC Score Calculator</h3>
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4>Developed By</h4>
+                        <p><strong>Neurodevelopmental Disorders Prevention Center</strong></p>
+                        <p>Perinatal Institute</p>
+                        <p>Cincinnati Children's Hospital Medical Center</p>
+                        <p>Cincinnati, OH, USA</p>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact Information</h4>
+                        <p><strong>Nehal A. Parikh, DO, MS</strong></p>
+                        <p>Perinatal Institute, Cincinnati Children's Hospital Medical Center</p>
+                        <p>3333 Burnet Ave., MLC 7009, Cincinnati, OH 45229, USA</p>
+                        <p>Email: <a href="mailto:nehal.parikh@cchmc.org">nehal.parikh@cchmc.org</a></p>
+                        <p>Phone: 513.636.7584 | Fax: 513.803.0969</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p><strong>Citation:</strong> Derbie AY, Altaye M, Folger AT, Parikh NA. Development of perinatal social determinants of health composite score in infants born preterm. 
+                    Neurodevelopmental Disorders Prevention Center, Cincinnati Children's Hospital Medical Center, 2025.</p>
+                    <p style="margin-top: 15px; font-size: 0.9em;">© 2025 Cincinnati Children's Hospital Medical Center. This calculator is for research and clinical assessment purposes. 
+                    Results should be interpreted in conjunction with clinical judgment and comprehensive patient evaluation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function calculateScores() {
+            // Get form values
+            const unsupForm = document.getElementById('unsupervised-form');
+            const supForm = document.getElementById('supervised-form');
+            
+            // Validate forms
+            if (!unsupForm.checkValidity() || !supForm.checkValidity()) {
+                alert('Please complete all fields before calculating.');
+                return;
+            }
+            
+            // Calculate unsupervised score
+            let unsupScore = 0;
+            const unsupInputs = unsupForm.querySelectorAll('select');
+            unsupInputs.forEach(input => {
+                unsupScore += parseFloat(input.value);
+            });
+            
+            // Calculate supervised score
+            let supScore = 0;
+            const supInputs = supForm.querySelectorAll('select');
+            supInputs.forEach(input => {
+                supScore += parseFloat(input.value);
+            });
+            
+            // Determine risk categories based on tertiles
+            let unsupRisk, unsupRiskClass, unsupNDI, unsupPercentile;
+            if (unsupScore < -0.11) {
+                unsupRisk = "HIGH RISK";
+                unsupRiskClass = "risk-high";
+                unsupNDI = "51.3%";
+                unsupPercentile = "Lower third";
+            } else if (unsupScore <= -0.07) {
+                unsupRisk = "MODERATE RISK";
+                unsupRiskClass = "risk-moderate";
+                unsupNDI = "41.4%";
+                unsupPercentile = "Middle third";
+            } else {
+                unsupRisk = "LOW RISK";
+                unsupRiskClass = "risk-low";
+                unsupNDI = "23.1%";
+                unsupPercentile = "Upper third";
+            }
+            
+            let supRisk, supRiskClass, supNDI, supPercentile, predictedBayley;
+            if (supScore < -16.10) {
+                supRisk = "HIGH RISK";
+                supRiskClass = "risk-high";
+                supNDI = "61.1%";
+                supPercentile = "Lower third";
+                predictedBayley = "75-85";
+            } else if (supScore <= -6.74) {
+                supRisk = "MODERATE RISK";
+                supRiskClass = "risk-moderate";
+                supNDI = "39.1%";
+                supPercentile = "Middle third";
+                predictedBayley = "85-95";
+            } else {
+                supRisk = "LOW RISK";
+                supRiskClass = "risk-low";
+                supNDI = "17.0%";
+                supPercentile = "Upper third";
+                predictedBayley = "95-105";
+            }
+            
+            // Display results
+            document.getElementById('unsup-score').textContent = unsupScore.toFixed(2);
+            document.getElementById('unsup-risk').textContent = unsupRisk;
+            document.getElementById('unsup-risk').className = 'risk-category ' + unsupRiskClass;
+            document.getElementById('unsup-ndi').textContent = unsupNDI;
+            document.getElementById('unsup-percentile').textContent = unsupPercentile;
+            
+            document.getElementById('sup-score').textContent = supScore.toFixed(2);
+            document.getElementById('sup-risk').textContent = supRisk;
+            document.getElementById('sup-risk').className = 'risk-category ' + supRiskClass;
+            document.getElementById('sup-ndi').textContent = supNDI;
+            document.getElementById('sup-percentile').textContent = supPercentile;
+            document.getElementById('sup-bayley').textContent = predictedBayley;
+            
+            // Generate recommendations
+            let recommendations = '';
+            if (supRiskClass === 'risk-high' || unsupRiskClass === 'risk-high') {
+                recommendations = `
+                    <ul>
+                        <li>Immediate enrollment in early intervention services recommended</li>
+                        <li>Comprehensive developmental evaluation within 1 month</li>
+                        <li>Connect family with social services and support programs</li>
+                        <li>Implement intensive home-based intervention strategies</li>
+                        <li>Schedule developmental monitoring every 3 months</li>
+                        <li>Consider referral to developmental pediatrician</li>
+                        <li>Provide parent education on developmental stimulation techniques</li>
+                        <li>Screen for maternal depression and provide support as needed</li>
+                    </ul>
+                `;
+            } else if (supRiskClass === 'risk-moderate' || unsupRiskClass === 'risk-moderate') {
+                recommendations = `
+                    <ul>
+                        <li>Consider early intervention services evaluation</li>
+                        <li>Enhanced developmental surveillance at each visit</li>
+                        <li>Provide anticipatory guidance on developmental milestones</li>
+                        <li>Connect with community resources for family support</li>
+                        <li>Schedule developmental monitoring every 4-6 months</li>
+                        <li>Encourage participation in parent-child interaction programs</li>
+                        <li>Monitor progress closely and adjust interventions as needed</li>
+                    </ul>
+                `;
+            } else {
+                recommendations = `
+                    <ul>
+                        <li>Continue standard developmental follow-up</li>
+                        <li>Routine surveillance at well-child visits</li>
+                        <li>Provide age-appropriate developmental guidance</li>
+                        <li>Encourage continued positive parenting practices</li>
+                        <li>Annual developmental screening recommended</li>
+                        <li>Maintain awareness of available resources if needs change</li>
+                    </ul>
+                `;
+            }
+            
+            document.getElementById('recommendations-content').innerHTML = recommendations;
+            
+            // Show results section
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Auto-fill example when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            // You can add functionality to auto-fill the example case if needed
+        });
+    </script>
+</body>
+</html>
