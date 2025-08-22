@@ -614,7 +614,7 @@
                     <div class="warning-box">
                         <h3>Important Limitations</h3>
                         <ul>
-                            <li>This tool quantifies social risk burden but should not be used as a standalone predictor of individual outcomes</li>
+                            <li>This tool quantifies social risk but should not be used as a standalone predictor of individual outcomes</li>
                             <li>External validation is essential before implementation in populations outside Greater Cincinnati</li>
                             <li>The tool does not capture all relevant social determinants (e.g., maternal mental health, neighborhood factors)</li>
                             <li>Results should be interpreted within comprehensive clinical and social assessment</li>
@@ -671,7 +671,7 @@
             <div id="calculator" class="tab-content">
                 <div class="info-box">
                     <strong>Instructions:</strong> Complete either or both models below based on your assessment needs. Each model 
-                    can be calculated independently. The scores provide a quantitative measure of cumulative social risk burden 
+                    can be calculated independently. The scores provide a quantitative measure of cumulative social risk 
                     based on validated weights from our cohort study.
                 </div>
                 
@@ -880,7 +880,7 @@
                             <h4 style="margin-bottom: 15px;">Calculated Scores:</h4>
                             <p><strong>MCA Model Score:</strong> -3.08 (3rd percentile)</p>
                             <p><strong>Ridge Model Score:</strong> -15.62 (5th percentile)</p>
-                            <p><strong>Risk Assessment:</strong> High cumulative social risk burden</p>
+                            <p><strong>Risk Assessment:</strong> High cumulative social risk</p>
                             
                             <div style="margin-top: 20px; padding: 15px; background: #e7f3ff; border-radius: 8px;">
                                 <strong>Clinical Considerations:</strong>
@@ -915,7 +915,7 @@
                     <h3>About This Tool</h3>
                     <p>Developed by the Neurodevelopmental Disorders Prevention Center at Cincinnati Children's Hospital Medical Center</p>
                     <p style="margin-top: 15px; font-size: 0.9em;">
-                        This calculator implements evidence-based composite scores for quantifying social risk burden in preterm infants. 
+                        This calculator implements evidence-based composite scores for quantifying social risk in preterm infants. 
                         Results should be interpreted within comprehensive clinical assessment. External validation is required before 
                         implementation in new populations.
                     </p>
@@ -985,11 +985,11 @@
             // Generate interpretation based on study findings
             let interpretation = "";
             if (percentile <= 33) {
-                interpretation = "High social risk burden. Consider comprehensive support services and enhanced developmental surveillance.";
+                interpretation = "High social risk. Consider comprehensive support services and enhanced developmental surveillance.";
             } else if (percentile <= 66) {
-                interpretation = "Moderate social risk burden. Standard follow-up with attention to social support resources.";
+                interpretation = "Moderate social risk. Standard follow-up with attention to social support resources.";
             } else {
-                interpretation = "Lower social risk burden relative to study population. Continue routine neurodevelopmental monitoring.";
+                interpretation = "Lower social risk relative to study population. Continue routine neurodevelopmental monitoring.";
             }
             
             // Display results
@@ -1037,11 +1037,11 @@
             // Generate interpretation based on study findings
             let interpretation = "";
             if (percentile <= 33) {
-                interpretation = "High social risk burden. Enhanced surveillance and early intervention services strongly recommended.";
+                interpretation = "High social risk. Enhanced surveillance and early intervention services strongly recommended.";
             } else if (percentile <= 66) {
-                interpretation = "Moderate social risk burden. Consider additional developmental support and monitoring.";
+                interpretation = "Moderate social risk. Consider additional developmental support and monitoring.";
             } else {
-                interpretation = "Lower social risk burden relative to study population. Standard neurodevelopmental follow-up appropriate.";
+                interpretation = "Lower social risk relative to study population. Standard neurodevelopmental follow-up appropriate.";
             }
             
             // Display results
