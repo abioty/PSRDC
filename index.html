@@ -349,6 +349,17 @@
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
         
+        .score-range-bar::after {
+            content: '';
+            position: absolute;
+            left: 70%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        
         .score-indicator {
             position: absolute;
             top: -10px;
@@ -749,8 +760,9 @@
                                         <div id="unsup-indicator" class="score-indicator" data-score=""></div>
                                     </div>
                                     <div class="range-labels">
-                                        <span>Higher Risk (-3.5)</span>
-                                        <span>Lower Risk (+1.5)</span>
+                                        <span>Higher Risk</span>
+                                        <span>Reference (0)</span>
+                                        <span>Lowest Risk</span>
                                     </div>
                                 </div>
                                 
@@ -840,8 +852,9 @@
                                         <div id="sup-indicator" class="score-indicator" data-score=""></div>
                                     </div>
                                     <div class="range-labels">
-                                        <span>Higher Risk (-20)</span>
-                                        <span>Lower Risk (+5)</span>
+                                        <span>Higher Risk</span>
+                                        <span>Reference (0)</span>
+                                        <span>Lowest Risk</span>
                                     </div>
                                 </div>
                                 
@@ -1063,20 +1076,30 @@
         
         // Calculate percentile for MCA model based on empirical distribution
         function calculateMCAPercentile(score) {
-            // Based on study tertiles and distribution
-            if (score < -1.5) return Math.max(1, 15 + (score + 3.5) * 7.5);
-            if (score < -0.5) return 15 + ((score + 1.5) * 18);
-            if (score < 0.5) return 33 + ((score + 0.5) * 33);
-            return Math.min(99, 66 + (score - 0.5) * 20);
+            // Reference group (score = 0) should be at ~75th percentile (low risk)
+            // More negative scores = higher risk = lower percentile
+            // Score range approximately -3.5 to +1.5
+            if (score <= -2.0) return Math.max(1, 10 + (score + 3.5) * 6.67);
+            if (score <= -1.0) return 10 + ((score + 2.0) * 15);
+            if (score <= -0.5) return 25 + ((score + 1.0) * 16);
+            if (score <= -0.25) return 33 + ((score + 0.5) * 13.2);
+            if (score <= 0) return 40 + ((score + 0.25) * 140);  // score=0 gives 75th percentile
+            // Positive scores (protective beyond reference) get even higher percentiles
+            return Math.min(99, 75 + (score * 16));
         }
         
         // Calculate percentile for Ridge model based on empirical distribution  
         function calculateRidgePercentile(score) {
-            // Based on study tertiles and distribution
-            if (score < -12) return Math.max(1, 15 + (score + 20) * 1.875);
-            if (score < -5) return 15 + ((score + 12) * 2.57);
-            if (score < 0) return 33 + ((score + 5) * 6.6);
-            return Math.min(99, 66 + (score * 6.6));
+            // Reference group (score = 0) should be at ~75th percentile (low risk)
+            // More negative scores = higher risk = lower percentile
+            // Score range approximately -20 to +5
+            if (score <= -15) return Math.max(1, 5 + (score + 20) * 1);
+            if (score <= -10) return 5 + ((score + 15) * 2);
+            if (score <= -5) return 15 + ((score + 10) * 3.6);
+            if (score <= -2) return 33 + ((score + 5) * 5.67);
+            if (score <= 0) return 50 + ((score + 2) * 12.5);  // score=0 gives 75th percentile
+            // Positive scores (protective beyond reference) get even higher percentiles
+            return Math.min(99, 75 + (score * 5));
         }
     </script>
 </body>
