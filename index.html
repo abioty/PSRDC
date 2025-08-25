@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perinatal SDoH Composite Score Calculator - Cincinnati Children's Hospital</title>
+    <title>Perinatal SDoH Composite Score Calculator</title>
     <style>
         * {
             margin: 0;
@@ -28,26 +28,19 @@
         .header {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         
         .header h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2em;
+            margin-bottom: 8px;
         }
         
         .header p {
-            font-size: 1.1em;
+            font-size: 1em;
             opacity: 0.95;
-        }
-        
-        .institution-badge {
-            margin-top: 15px;
-            font-size: 0.95em;
-            opacity: 0.9;
         }
         
         .nav-tabs {
@@ -94,118 +87,55 @@
         
         /* Overview Section Styles */
         .overview-section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            max-width: 900px;
         }
         
         .overview-section h2 {
             color: #1e3c72;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #e9ecef;
+            font-size: 1.5em;
         }
         
         .overview-section h3 {
             color: #2a5298;
-            margin: 20px 0 15px 0;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
         }
         
         .overview-section p {
-            line-height: 1.8;
+            line-height: 1.6;
             color: #495057;
             margin-bottom: 15px;
         }
         
         .overview-section ul {
-            margin-left: 30px;
-            margin-bottom: 20px;
+            margin-left: 25px;
+            margin-bottom: 15px;
         }
         
         .overview-section li {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #495057;
             line-height: 1.6;
-        }
-        
-        .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 5px;
-        }
-        
-        .warning-box h3 {
-            color: #856404;
-            margin-bottom: 10px;
         }
         
         .info-box {
             background: #e7f3ff;
             border-left: 4px solid #1e3c72;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 5px;
-        }
-        
-        .success-box {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 5px;
-        }
-        
-        .factors-table {
-            width: 100%;
-            border-collapse: collapse;
+            padding: 15px;
             margin: 20px 0;
+            border-radius: 5px;
         }
         
-        .factors-table th {
-            background: #1e3c72;
-            color: white;
-            padding: 12px;
-            text-align: left;
-        }
-        
-        .factors-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #e9ecef;
-        }
-        
-        .factors-table tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .key-findings {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .finding-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #2a5298;
-        }
-        
-        .finding-card h4 {
-            color: #1e3c72;
-            margin-bottom: 10px;
-        }
-        
-        .finding-card .value {
-            font-size: 2em;
-            font-weight: bold;
-            color: #2a5298;
-        }
-        
-        .finding-card .description {
-            color: #666;
-            margin-top: 5px;
-            font-size: 0.9em;
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
         }
         
         /* Calculator Styles */
@@ -218,48 +148,46 @@
         
         .calculator-section {
             background: #f8f9fa;
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
         
         .calculator-section h2 {
             color: #1e3c72;
-            margin-bottom: 10px;
-            padding-bottom: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 3px solid #1e3c72;
+            font-size: 1.4em;
         }
         
-        .model-performance {
+        .score-range-info {
             background: white;
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 5px;
             margin-bottom: 20px;
             font-size: 0.9em;
             color: #666;
         }
         
-        .model-performance strong {
-            color: #1e3c72;
-        }
-        
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .form-group label {
             display: block;
             font-weight: 600;
             color: #555;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            font-size: 0.95em;
         }
         
         .form-group select {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 2px solid #ddd;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.3s;
             background: white;
         }
@@ -272,16 +200,16 @@
         
         .calculate-btn {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 20px;
+            margin-top: 15px;
         }
         
         .calculate-btn:hover {
@@ -291,80 +219,41 @@
         
         .results-section {
             display: none;
-            margin-top: 40px;
-            padding: 30px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            animation: slideIn 0.5s ease-out;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .result-card {
-            background: white;
+            margin-top: 30px;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
         }
         
         .result-card h3 {
             color: #1e3c72;
-            margin-bottom: 20px;
-            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-size: 1.2em;
         }
         
         .score-display {
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 15px 0;
             text-align: center;
             color: #1e3c72;
         }
         
-        .score-range-container {
-            margin: 30px 0;
-        }
-        
-        .score-range-label {
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 10px;
-        }
-        
         .score-range-bar {
             position: relative;
-            height: 40px;
+            height: 35px;
             background: linear-gradient(to right, #dc3545 0%, #ffc107 50%, #28a745 100%);
             border-radius: 20px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .score-range-bar::after {
-            content: '';
-            position: absolute;
-            left: 70%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: rgba(0,0,0,0.3);
-            z-index: 1;
+            margin: 20px 0;
         }
         
         .score-indicator {
             position: absolute;
-            top: -10px;
+            top: -8px;
             width: 4px;
-            height: 60px;
+            height: 50px;
             background: #333;
             border-radius: 2px;
             transition: left 0.5s ease;
@@ -373,27 +262,27 @@
         .score-indicator::before {
             content: attr(data-score);
             position: absolute;
-            top: -25px;
+            top: -22px;
             left: 50%;
             transform: translateX(-50%);
             background: #333;
             color: white;
-            padding: 2px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             white-space: nowrap;
         }
         
         .range-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
-            font-size: 14px;
+            margin-top: 5px;
+            font-size: 13px;
             color: #666;
         }
         
         .stat-value {
-            font-size: 1.1em;
+            font-size: 1em;
             color: #495057;
             margin: 15px 0;
             padding: 10px;
@@ -406,89 +295,25 @@
             color: #6c757d;
         }
         
-        .example-section {
-            margin-top: 50px;
-            padding: 30px;
-            background: #f8f9fa;
-            border-radius: 15px;
-        }
-        
-        .example-section h2 {
-            color: #1e3c72;
-            margin-bottom: 20px;
-        }
-        
-        .example-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 30px;
-            margin-top: 20px;
-        }
-        
-        .example-inputs {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        
-        .example-results {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        
-        .citation-section {
-            margin-top: 40px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #1e3c72;
-        }
-        
         .footer {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 40px 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
             margin-top: 50px;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-        }
-        
-        .footer h3 {
-            margin-bottom: 15px;
-            color: white;
-        }
-        
-        .footer p {
-            margin-bottom: 10px;
-            opacity: 0.95;
-        }
-        
-        .footer a {
-            color: white;
-            text-decoration: none;
-            opacity: 0.95;
-        }
-        
-        .footer a:hover {
-            opacity: 1;
-            text-decoration: underline;
+            color: #6c757d;
+            font-size: 0.9em;
         }
         
         .print-btn {
             background: #6c757d;
             color: white;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
+            font-size: 14px;
         }
         
         .print-btn:hover {
@@ -496,10 +321,7 @@
         }
         
         @media (max-width: 768px) {
-            .calculator-wrapper,
-            .example-grid,
-            .key-findings,
-            .footer-content {
+            .calculator-wrapper {
                 grid-template-columns: 1fr;
             }
         }
@@ -518,12 +340,7 @@
     <div class="container">
         <div class="header">
             <h1>Perinatal SDoH Composite Score Calculator</h1>
-            <p>Data-Driven Social Risk Assessment for Preterm Infants</p>
-            <p style="font-size: 0.9em; margin-top: 10px;">Validated for Infants Born ≤32 Weeks Gestational Age</p>
-            <div class="institution-badge">
-                Neurodevelopmental Disorders Prevention Center<br>
-                Cincinnati Children's Hospital Medical Center
-            </div>
+            <p>Social Determinants of Health Assessment for Preterm Infants (≤32 weeks GA)</p>
         </div>
         
         <div class="nav-tabs">
@@ -535,162 +352,56 @@
             <!-- Overview Tab -->
             <div id="overview" class="tab-content active">
                 <div class="overview-section">
-                    <h2>Study Overview</h2>
+                    <h2>About This Tool</h2>
                     <p>
-                        This calculator implements the perinatal Social Determinants of Health (SDoH) composite scores developed 
-                        through a prospective cohort study of 328 preterm infants born at ≤32 weeks' gestation across five Level III/IV 
-                        NICUs in Greater Cincinnati (2016-2019). The study addresses a critical gap in neonatal care, where only 23% 
-                        of U.S. NICUs implement standardized SDoH screening despite evidence that social factors profoundly influence 
-                        neurodevelopmental trajectories.
+                        This calculator provides two data-driven composite scores for quantifying social risk in preterm infants 
+                        born at ≤32 weeks gestational age. The scores integrate five social determinants: maternal age, education, 
+                        household income, employment status, and family structure.
                     </p>
                     
-                    <div class="key-findings">
-                        <div class="finding-card">
-                            <h4>Study Cohort</h4>
-                            <div class="value">328</div>
-                            <div class="description">Preterm infants analyzed</div>
-                        </div>
-                        <div class="finding-card">
-                            <h4>Predictive Power</h4>
-                            <div class="value">19-21%</div>
-                            <div class="description">Variance explained in outcomes</div>
-                        </div>
-                        <div class="finding-card">
-                            <h4>Score Difference</h4>
-                            <div class="value">12-27</div>
-                            <div class="description">Point difference between risk tertiles</div>
-                        </div>
-                        <div class="finding-card">
-                            <h4>Validation</h4>
-                            <div class="value">r=0.38[R² = 0.14] (unsupervised) and r=0.34 [R² = 0.12] (supervised)</div>
-                            <div class="description">5-year temporal validity</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="overview-section">
-                    <h2>Scientific Foundation</h2>
-                    <h3>Development Methodology</h3>
-                    <p>
-                        Two complementary modeling approaches were developed using integrated supervised and unsupervised machine 
-                        learning techniques:
-                    </p>
-                    
+                    <h3>Available Models</h3>
                     <ul>
-                        <li><strong>Ridge Regression Model (Supervised):</strong> Achieved R²=0.19 for cognitive outcomes, explaining 
-                        19% of cognitive, 21% of language, and 11% of motor score variance. Optimized directly for Bayley-III scores 
-                        at 2 years corrected age.</li>
-                        <li><strong>Multiple Correspondence Analysis Model (Unsupervised):</strong> Achieved R²=0.16 for cognitive 
-                        outcomes without reference to specific outcomes, capturing inherent patterns in social risk factors for 
-                        broader generalizability.</li>
+                        <li><strong>MCA Model (Unsupervised):</strong> Developed using Multiple Correspondence Analysis to identify 
+                        natural patterns in social risk factors without reference to specific outcomes.</li>
+                        <li><strong>Ridge Model (Supervised):</strong> Developed using ridge regression optimized for cognitive 
+                        outcomes at 2 years corrected age.</li>
                     </ul>
                     
-                    <h3>Key Findings</h3>
-                    <p>
-                        The composite scores substantially outperformed individual social risk factors and existing international 
-                        models. Low income and lower maternal education emerged as the strongest risk factors, with deficits of 
-                        5-10 points for cognitive outcomes and up to 10 points for language outcomes. The convergence of supervised 
-                        and unsupervised approaches strengthens the identified social risk structure.
-                    </p>
-                    
-                    <div class="info-box">
-                        <strong>Clinical Significance:</strong> The 12-27 point differences between high- and low-risk tertiles 
-                        exceed the established 0.5-0.8 standard deviation range for clinical significance, supporting the tool's 
-                        utility for risk stratification and resource allocation.
-                    </div>
-                </div>
-                
-                <div class="overview-section">
-                    <h2>Implementation Guidelines</h2>
-                    
-                    <h3>When to Use This Tool</h3>
+                    <h3>When to Use</h3>
                     <ul>
-                        <li>Initial assessment at NICU discharge or first follow-up visit</li>
-                        <li>Risk stratification for neurodevelopmental follow-up programs</li>
-                        <li>Resource allocation for early intervention services</li>
-                        <li>Research studies examining social determinants and health outcomes</li>
-                        <li>Quality improvement initiatives focused on health equity</li>
-                        <li>Case-mix adjustment for institutional comparisons</li>
+                        <li>Initial assessment at NICU discharge or follow-up visits</li>
+                        <li>Research studies examining social determinants</li>
+                        <li>Risk stratification for developmental follow-up</li>
+                        <li>Resource allocation planning</li>
                     </ul>
-                    
-                    <h3>Model Selection Guidance</h3>
-                    <p><strong>Ridge Model (Supervised):</strong> Recommended for clinical and research applications specifically 
-                    focused on neurodevelopmental outcomes at 2 years, particularly Bayley-III scores. This model may be more 
-                    interpretable for clinicians familiar with regression-based tools.</p>
-                    
-                    <p><strong>MCA Model (Unsupervised):</strong> Recommended for applications requiring assessment of broader 
-                    outcomes beyond Bayley scores, external validation across different populations, or when generalizability 
-                    is prioritized. This approach captures inherent patterns independent of specific outcomes.</p>
                     
                     <div class="warning-box">
-                        <h3>Important Limitations</h3>
-                        <ul>
-                            <li>This tool quantifies social risk but should not be used as a standalone predictor of individual outcomes</li>
-                            <li>The tool does not capture all relevant social determinants (e.g., maternal mental health, neighborhood factors)</li>
-                            <li>Results should be interpreted within comprehensive clinical and social assessment</li>
-                            <li>Scores reflect associations, not causal relationships</li>
+                        <strong>Important Notes:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Scores quantify social risk but do not predict individual outcomes</li>
+                            <li>External validation required for populations outside the development cohort</li>
+                            <li>Results should be interpreted within comprehensive clinical assessment</li>
+                            <li>For detailed methodology, refer to the published manuscript</li>
                         </ul>
                     </div>
-                </div>
-                
-                <div class="overview-section">
-                    <h2>Social Determinant Factors</h2>
-                    <p>The composite scores integrate five key social determinants validated through extensive literature review 
-                    and empirical analysis:</p>
-                    
-                    <table class="factors-table">
-                        <thead>
-                            <tr>
-                                <th>Factor</th>
-                                <th>Categories</th>
-                                <th>Evidence Base</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Maternal Age</strong></td>
-                                <td>• Over 25 years (reference)<br>• 25 years or younger</td>
-                                <td>Associated with parenting resources and stability</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Maternal Education</strong></td>
-                                <td>• Graduate degree (reference)<br>• College/Some college<br>• High school or less</td>
-                                <td>Strongest predictor; virtually eliminates preterm-related deficits at higher levels</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Household Income</strong></td>
-                                <td>• High ≥400% FPL (reference)<br>• Middle 125-400% FPL<br>• Low ≤125% FPL</td>
-                                <td>Affects access to resources and developmental opportunities</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Employment Status</strong></td>
-                                <td>• Employed (reference)<br>• Stay-at-home caregiver<br>• Unemployed</td>
-                                <td>Reflects economic stability and time resources</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Family Structure</strong></td>
-                                <td>• Married (reference)<br>• Cohabiting<br>• Single/Divorced/Separated</td>
-                                <td>Influences support systems and resource availability</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
             
             <!-- Calculator Tab -->
             <div id="calculator" class="tab-content">
                 <div class="info-box">
-                    <strong>Instructions:</strong> Complete either or both models below based on your assessment needs. Each model 
-                    can be calculated independently. The scores provide a quantitative measure of cumulative social risk 
-                    based on validated weights from our cohort study.
+                    <strong>Instructions:</strong> Select the appropriate category for each social determinant. You may calculate 
+                    scores using either or both models independently. Lower scores indicate higher social risk.
                 </div>
                 
                 <div class="calculator-wrapper">
                     <!-- MCA Model (Unsupervised) -->
                     <div class="calculator-section">
                         <h2>MCA Model (Unsupervised)</h2>
-                        <div class="model-performance">
-                            <strong>Performance:</strong> R²=0.16 for cognitive outcomes • Broader applicability
+                        
+                        <div class="score-range-info">
+                            <strong>Score Range:</strong> -3.35 to +1.03<br>
+                            <small>Lower scores = higher risk | Score of 0 = all reference categories</small>
                         </div>
                         
                         <form id="unsupervised-form">
@@ -753,16 +464,13 @@
                                 <h3>MCA Model Results</h3>
                                 <div id="unsup-score" class="score-display"></div>
                                 
-                                <div class="score-range-container">
-                                    <div class="score-range-label">Score Position Within Range:</div>
-                                    <div class="score-range-bar">
-                                        <div id="unsup-indicator" class="score-indicator" data-score=""></div>
-                                    </div>
-                                    <div class="range-labels">
-                                        <span>Higher Risk</span>
-                                        <span>Reference (0)</span>
-                                        <span>Lowest Risk</span>
-                                    </div>
+                                <div class="score-range-bar">
+                                    <div id="unsup-indicator" class="score-indicator" data-score=""></div>
+                                </div>
+                                <div class="range-labels">
+                                    <span>Higher Risk</span>
+                                    <span>Reference (0)</span>
+                                    <span>Lower Risk</span>
                                 </div>
                                 
                                 <div class="stat-value">
@@ -781,8 +489,10 @@
                     <!-- Ridge Model (Supervised) -->
                     <div class="calculator-section">
                         <h2>Ridge Model (Supervised)</h2>
-                        <div class="model-performance">
-                            <strong>Performance:</strong> R²=0.19 for cognitive • Optimized for Bayley-III
+                        
+                        <div class="score-range-info">
+                            <strong>Score Range:</strong> -19.58 to +0.93<br>
+                            <small>Lower scores = higher risk | Score of 0 = all reference categories</small>
                         </div>
                         
                         <form id="supervised-form">
@@ -845,16 +555,13 @@
                                 <h3>Ridge Model Results</h3>
                                 <div id="sup-score" class="score-display"></div>
                                 
-                                <div class="score-range-container">
-                                    <div class="score-range-label">Score Position Within Range:</div>
-                                    <div class="score-range-bar">
-                                        <div id="sup-indicator" class="score-indicator" data-score=""></div>
-                                    </div>
-                                    <div class="range-labels">
-                                        <span>Higher Risk</span>
-                                        <span>Reference (0)</span>
-                                        <span>Lowest Risk</span>
-                                    </div>
+                                <div class="score-range-bar">
+                                    <div id="sup-indicator" class="score-indicator" data-score=""></div>
+                                </div>
+                                <div class="range-labels">
+                                    <span>Higher Risk</span>
+                                    <span>Reference (0)</span>
+                                    <span>Lower Risk</span>
                                 </div>
                                 
                                 <div class="stat-value">
@@ -872,99 +579,25 @@
                 </div>
                 
                 <button class="print-btn" onclick="window.print()">Print Results</button>
-                
-                <!-- Example Section -->
-                <div class="example-section">
-                    <h2>Clinical Example</h2>
-                    
-                    <div class="example-grid">
-                        <div class="example-inputs">
-                            <h4 style="margin-bottom: 15px;">Patient Profile:</h4>
-                            <p><strong>Maternal Age:</strong> 22 years</p>
-                            <p><strong>Education:</strong> High school diploma</p>
-                            <p><strong>Income:</strong> 80% FPL (low income)</p>
-                            <p><strong>Employment:</strong> Unemployed</p>
-                            <p><strong>Family Structure:</strong> Single mother</p>
-                            <p style="margin-top: 15px;"><em>Infant: 28 weeks GA, approaching 2-year follow-up</em></p>
-                        </div>
-                        
-                        <div class="example-results">
-                            <h4 style="margin-bottom: 15px;">Calculated Scores:</h4>
-                            <p><strong>MCA Model Score:</strong> -3.08 (3rd percentile)</p>
-                            <p><strong>Ridge Model Score:</strong> -15.62 (5th percentile)</p>
-                            <p><strong>Risk Assessment:</strong> High cumulative social risk</p>
-                            
-                            <div style="margin-top: 20px; padding: 15px; background: #e7f3ff; border-radius: 8px;">
-                                <strong>Clinical Considerations:</strong>
-                                <ul style="list-style: none; padding: 0; margin-top: 10px;">
-                                    <li>• Prioritize for early intervention enrollment</li>
-                                    <li>• Enhanced developmental surveillance recommended</li>
-                                    <li>• Connect with social services for comprehensive support</li>
-                                    <li>• Consider home visiting program referral</li>
-                                    <li>• Schedule frequent neurodevelopmental monitoring</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="citation-section">
-                    <strong>Primary Citation:</strong> Derbie AY, Altaye M, Folger AT, Parikh NA. Development of perinatal social 
-                    determinants of health composite risk score in infants born preterm. Cincinnati Children's Hospital Medical Center, 2025.
-                    <br><br>
-                    <strong>Funding:</strong> This work was supported by grants from the National Institutes of Health.
-                    <br><br>
-                    <strong>Validation:</strong> Internally validated using nested 10-fold cross-validation with 5-fold inner 
-                    cross-validation for hyperparameter tuning. Temporal validation demonstrated significant predictive validity 
-                    with 5-year outcomes (r=0.34, p<.001).
-                </div>
             </div>
         </div>
         
         <div class="footer">
-            <div class="footer-content">
-                <div>
-                    <h3>About This Tool</h3>
-                    <p>Developed by the Neurodevelopmental Disorders Prevention Center at Cincinnati Children's Hospital Medical Center</p>
-                    <p style="margin-top: 15px; font-size: 0.9em;">
-                        This calculator implements evidence-based composite scores for quantifying social risk in preterm infants. 
-                        Results should be interpreted within comprehensive clinical assessment. External validation is required before 
-                        implementation in new populations.
-                    </p>
-                </div>
-                <div>
-                    <h3>Contact Information</h3>
-                    <p><strong>Principal Investigator:</strong><br>
-                    Nehal A. Parikh, DO, MS</p>
-                    <p>Perinatal Institute<br>
-                    Cincinnati Children's Hospital Medical Center<br>
-                    3333 Burnet Ave., MLC 7009<br>
-                    Cincinnati, OH 45229</p>
-                    <p>Email: <a href="mailto:nehal.parikh@cchmc.org">nehal.parikh@cchmc.org</a><br>
-                    Phone: 513.636.7584</p>
-                </div>
-            </div>
-            <p style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.9em;">
-                © 2025 Cincinnati Children's Hospital Medical Center. For research and clinical assessment purposes.
-            </p>
+            <p>Developed by Abiot Y. Derbie, PhD</p>
+            <p style="margin-top: 5px;">For research and clinical assessment purposes</p>
         </div>
     </div>
     
     <script>
         // Tab switching functionality
         function showTab(tabName) {
-            // Hide all tabs
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => tab.classList.remove('active'));
             
-            // Remove active class from all nav tabs
             const navTabs = document.querySelectorAll('.nav-tab');
             navTabs.forEach(tab => tab.classList.remove('active'));
             
-            // Show selected tab
             document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to clicked nav tab
             event.target.classList.add('active');
         }
         
@@ -972,36 +605,33 @@
         function calculateUnsupervised() {
             const form = document.getElementById('unsupervised-form');
             
-            // Validate form
             if (!form.checkValidity()) {
                 alert('Please complete all fields before calculating.');
                 return;
             }
             
-            // Calculate score
             let score = 0;
             const inputs = form.querySelectorAll('select');
             inputs.forEach(input => {
                 score += parseFloat(input.value);
             });
             
-            // Calculate percentile based on study distribution
-            // Using empirical distribution from the study
+            // Calculate percentile
             const percentile = calculateMCAPercentile(score);
             
-            // Calculate position on scale (for visualization)
-            const minScore = -3.5;
-            const maxScore = 1.5;
+            // Calculate position on scale
+            const minScore = -3.35;
+            const maxScore = 1.03;
             const position = ((score - minScore) / (maxScore - minScore)) * 100;
             
-            // Generate interpretation based on study findings
+            // Generate interpretation
             let interpretation = "";
             if (percentile <= 33) {
-                interpretation = "High social risk. Consider comprehensive support services and enhanced developmental surveillance.";
+                interpretation = "Higher social risk. Enhanced surveillance and support services recommended.";
             } else if (percentile <= 66) {
-                interpretation = "Moderate social risk. Standard follow-up with attention to social support resources.";
+                interpretation = "Moderate social risk. Standard follow-up with attention to social resources.";
             } else {
-                interpretation = "Lower social risk relative to study population. Continue routine neurodevelopmental monitoring.";
+                interpretation = "Lower social risk. Continue routine monitoring.";
             }
             
             // Display results
@@ -1009,15 +639,11 @@
             document.getElementById('unsup-percentile').textContent = percentile.toFixed(0) + 'th percentile';
             document.getElementById('unsup-interpretation').textContent = interpretation;
             
-            // Update score indicator position
             const indicator = document.getElementById('unsup-indicator');
             indicator.style.left = Math.max(0, Math.min(100, position)) + '%';
             indicator.setAttribute('data-score', score.toFixed(2));
             
-            // Show results section
             document.getElementById('unsupervised-results').style.display = 'block';
-            
-            // Scroll to results
             document.getElementById('unsupervised-results').scrollIntoView({ behavior: 'smooth' });
         }
         
@@ -1025,35 +651,33 @@
         function calculateSupervised() {
             const form = document.getElementById('supervised-form');
             
-            // Validate form
             if (!form.checkValidity()) {
                 alert('Please complete all fields before calculating.');
                 return;
             }
             
-            // Calculate score
             let score = 0;
             const inputs = form.querySelectorAll('select');
             inputs.forEach(input => {
                 score += parseFloat(input.value);
             });
             
-            // Calculate percentile based on study distribution
+            // Calculate percentile
             const percentile = calculateRidgePercentile(score);
             
-            // Calculate position on scale (for visualization)
-            const minScore = -20;
-            const maxScore = 5;
+            // Calculate position on scale
+            const minScore = -19.58;
+            const maxScore = 0.93;
             const position = ((score - minScore) / (maxScore - minScore)) * 100;
             
-            // Generate interpretation based on study findings
+            // Generate interpretation
             let interpretation = "";
             if (percentile <= 33) {
-                interpretation = "High social risk. Enhanced surveillance and early intervention services strongly recommended.";
+                interpretation = "Higher social risk. Enhanced surveillance and early intervention recommended.";
             } else if (percentile <= 66) {
-                interpretation = "Moderate social risk. Consider additional developmental support and monitoring.";
+                interpretation = "Moderate social risk. Consider additional developmental support.";
             } else {
-                interpretation = "Lower social risk relative to study population. Standard neurodevelopmental follow-up appropriate.";
+                interpretation = "Lower social risk. Standard follow-up appropriate.";
             }
             
             // Display results
@@ -1061,44 +685,34 @@
             document.getElementById('sup-percentile').textContent = percentile.toFixed(0) + 'th percentile';
             document.getElementById('sup-interpretation').textContent = interpretation;
             
-            // Update score indicator position
             const indicator = document.getElementById('sup-indicator');
             indicator.style.left = Math.max(0, Math.min(100, position)) + '%';
             indicator.setAttribute('data-score', score.toFixed(2));
             
-            // Show results section
             document.getElementById('supervised-results').style.display = 'block';
-            
-            // Scroll to results
             document.getElementById('supervised-results').scrollIntoView({ behavior: 'smooth' });
         }
         
-        // Calculate percentile for MCA model based on empirical distribution
+        // Calculate percentile for MCA model
         function calculateMCAPercentile(score) {
-            // Reference group (score = 0) should be at ~75th percentile (low risk)
-            // More negative scores = higher risk = lower percentile
-            // Score range approximately -3.5 to +1.5
-            if (score <= -2.0) return Math.max(1, 10 + (score + 3.5) * 6.67);
-            if (score <= -1.0) return 10 + ((score + 2.0) * 15);
-            if (score <= -0.5) return 25 + ((score + 1.0) * 16);
-            if (score <= -0.25) return 33 + ((score + 0.5) * 13.2);
-            if (score <= 0) return 40 + ((score + 0.25) * 140);  // score=0 gives 75th percentile
-            // Positive scores (protective beyond reference) get even higher percentiles
-            return Math.min(99, 75 + (score * 16));
+            // Score of 0 (all reference) should be ~75th percentile
+            if (score <= -2.5) return Math.max(1, 5 + (score + 3.35) * 1.2);
+            if (score <= -1.5) return 10 + ((score + 2.5) * 8);
+            if (score <= -0.5) return 25 + ((score + 1.5) * 15);
+            if (score <= 0) return 40 + ((score + 0.5) * 70);
+            // Positive scores get even higher percentiles
+            return Math.min(99, 75 + (score * 23));
         }
         
-        // Calculate percentile for Ridge model based on empirical distribution  
+        // Calculate percentile for Ridge model  
         function calculateRidgePercentile(score) {
-            // Reference group (score = 0) should be at ~75th percentile (low risk)
-            // More negative scores = higher risk = lower percentile
-            // Score range approximately -20 to +5
-            if (score <= -15) return Math.max(1, 5 + (score + 20) * 1);
-            if (score <= -10) return 5 + ((score + 15) * 2);
-            if (score <= -5) return 15 + ((score + 10) * 3.6);
-            if (score <= -2) return 33 + ((score + 5) * 5.67);
-            if (score <= 0) return 50 + ((score + 2) * 12.5);  // score=0 gives 75th percentile
-            // Positive scores (protective beyond reference) get even higher percentiles
-            return Math.min(99, 75 + (score * 5));
+            // Score of 0 (all reference) should be ~75th percentile
+            if (score <= -15) return Math.max(1, 5 + (score + 19.58) * 1.1);
+            if (score <= -10) return 10 + ((score + 15) * 3);
+            if (score <= -5) return 25 + ((score + 10) * 3);
+            if (score <= 0) return 40 + ((score + 5) * 7);
+            // Positive scores get even higher percentiles
+            return Math.min(99, 75 + (score * 26));
         }
     </script>
 </body>
